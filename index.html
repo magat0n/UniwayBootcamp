@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +9,20 @@
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
     <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
 </head>
+
 <body>
     <header>
         <div class="header-container">
             <div class="header-content">
                 <div class="header-brand">
-                    <img src="./img/uniwaylog.png" alt="UNIWAY" class="header-logo">
-                    <p>A rota certa para o conhecimento</p>
+                    <a href="#" class="logo-link" aria-label="UNIWAY - Voltar ao início">
+                        <img src="./img/uniwaylog.png" alt="Logo UNIWAY - Plataforma de navegação inteligente para o campus da UNIMAR" class="header-logo">
+                    </a>
                 </div>
                 <nav class="header-nav">
+                    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Alternar tema">
+                        <span class="theme-icon">🌙</span>
+                    </button>
                     <a href="https://portal.unimar.br/alunos/index/login" target="_blank" class="nav-link">👤 Login</a>
                     <a href="https://oficial.unimar.br/vestibular/" target="_blank" class="nav-link">🎓 Vestibular</a>
                     <a href="https://projetos-pessoais-xi.vercel.app/" target="_blank" class="nav-link">👨‍💻
@@ -68,7 +74,7 @@
 
             <div class="sobre-stats">
                 <div class="stat-item">
-                    <span class="stat-number">6</span>
+                    <span class="stat-number">7</span>
                     <span class="stat-label">Blocos Mapeados</span>
                 </div>
                 <div class="stat-item">
@@ -97,6 +103,7 @@
                             <option value="Bloco 4">🏢 Bloco 4</option>
                             <option value="Bloco 5">🏢 Bloco 5</option>
                             <option value="Bloco 9">🏢 Bloco 9</option>
+                            <option value="Bloco Novo">🏢 TECH UNIMAR</option>
                         </select>
                     </div>
                     <div id="origin-info" class="block-info">
@@ -127,6 +134,7 @@
                             <option value="Bloco 4">🏢 Bloco 4</option>
                             <option value="Bloco 5">🏢 Bloco 5</option>
                             <option value="Bloco 9">🏢 Bloco 9</option>
+                            <option value="Bloco Novo">🏢 TECH UNIMAR</option>
                         </select>
                     </div>
                     <div id="destination-info" class="block-info">
@@ -137,16 +145,19 @@
         </section>
 
         <section class="video-container">
-            <h2>🎥 Tour Virtual: Sinta-se na Unimar!</h2>
-            <iframe src="https://www.youtube.com/embed/SzDF8yCsBq8?rel=0&vq=hd1080&modestbranding=1&controls=0"
-                title="Experiência Unimar 360º" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-            </iframe>
+            <h2> Tour Virtual: Sinta-se na Unimar!</h2>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/SzDF8yCsBq8?rel=0&vq=hd1080&modestbranding=1&controls=0"
+                    title="Experiência Unimar 360º" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                </iframe>
+            </div>
         </section>
     </main>
     <footer>
-        <p>🚀 Uniway - Desenvolvido para o <strong>Bootcamp 2025</strong>, feito para facilitar sua jornada na <strong>UNIMAR</strong></p>
+        <p>🚀 Uniway - Desenvolvido para o <strong>Bootcamp 2025</strong>, feito para facilitar sua jornada na
+            <strong>UNIMAR</strong></p>
         <p>Feito por: Giovani Ferreira Magaton, aluno da 3º série do Amilcare Mattei</p>
         <section id="comentarios">
             <button id="abrir-comentarios">💬 Deixe seu comentário</button>
@@ -174,4 +185,5 @@
     <script src="./js/script.js" defer></script>
 
 </body>
+
 </html>

@@ -87,6 +87,7 @@ const UNIMAR_BLOCKS = {
   "Bloco 4": [-49.968025629462446, -22.23591315440976],
   "Bloco 5": [-49.96830632322836, -22.236391457822027],
   "Bloco 9": [-49.966001159725565, -22.237938267468966],
+  "Bloco Novo": [-49.9649614256234, -22.240212856740712],
 };
 
 // Informações dos blocos com imagem e cursos (simples)
@@ -132,6 +133,13 @@ const BLOCK_INFOS = {
     nota: "Saúde",
     img: "./img/3-scaled.webp",
     cursos: ["Medicina", "Enfermagem"],
+  },
+  "Bloco Novo": {
+    endereco: "Tech Unimar",
+    horario: "07:30 - 22:00",
+    nota: "Novo Bloco",
+    img: "./img/3-scaled.webp",
+    cursos: ["Incubadora", "Unimar Tech"],
   },
 };
 
@@ -382,3 +390,49 @@ originInput.addEventListener("keypress", (e) => {
     calculateRoute();
   }
 });
+
+// ===== ALTERNÂNCIA DE TEMA =====
+
+// Elementos do tema
+const themeToggleBtn = document.getElementById("theme-toggle");
+const themeIcon = document.querySelector(".theme-icon");
+
+// Função para alternar tema
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+  
+  // Aplica o novo tema
+  document.documentElement.setAttribute("data-theme", newTheme);
+  
+  // Atualiza o ícone
+  themeIcon.textContent = newTheme === "dark" ? "☀️" : "🌙";
+  
+  // Salva a preferência no localStorage
+  localStorage.setItem("theme", newTheme);
+  
+  // Atualiza o estilo do mapa para tema escuro
+  if (newTheme === "dark") {
+    map.setStyle("mapbox://styles/mapbox/dark-v10");
+  } else {
+    map.setStyle("mapbox://styles/mapbox/streets-v11");
+  }
+}
+
+// Carrega o tema salvo ao inicializar
+function loadTheme() {
+  const savedTheme = localStorage.getItem("theme") || "light";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+  themeIcon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+  
+  // Aplica o estilo do mapa baseado no tema
+  if (savedTheme === "dark") {
+    map.setStyle("mapbox://styles/mapbox/dark-v10");
+  }
+}
+
+// Event listener para o botão de alternar tema
+themeToggleBtn.addEventListener("click", toggleTheme);
+
+// Carrega o tema ao inicializar a página
+document.addEventListener("DOMContentLoaded", loadTheme);
