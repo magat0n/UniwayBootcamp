@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIWAY</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="header-brand">
+                    <img src="/img/uniwaylog.png" alt="UNIWAY" class="header-logo">
+                    <p>A rota certa para o conhecimento</p>
+                </div>
+                <nav class="header-nav">
+                    <a href="https://portal.unimar.br/alunos/index/login" target="_blank" class="nav-link">👤 Login</a>
+                    <a href="https://oficial.unimar.br/vestibular/" target="_blank" class="nav-link">🎓 Vestibular</a>
+                    <a href="https://projetos-pessoais-xi.vercel.app/" target="_blank" class="nav-link">👨‍💻
+                        Contato</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <section id="sobre-projeto">
+            <h2>🎓 Sobre o Uniway</h2>
+            <div class="sobre-content">
+                <div class="sobre-card">
+                    <div class="card-icon">🗺️</div>
+                    <h3>Navegação Inteligente</h3>
+                    <p>O Uniway é uma plataforma inovadora desenvolvida especificamente para a Universidade de Marília
+                        (UNIMAR), oferecendo navegação inteligente e personalizada dentro do campus universitário.</p>
+                </div>
+
+                <div class="sobre-card">
+                    <div class="card-icon">🎯</div>
+                    <h3>Objetivo Principal</h3>
+                    <p>Facilitar a locomoção de estudantes, professores e visitantes da UNIMAR, fornecendo rotas
+                        otimizadas entre os diferentes blocos e instalações do campus.</p>
+                </div>
+
+                <div class="sobre-card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Funcionalidades</h3>
+                    <ul>
+                        <li>🗺️ Mapa interativo do campus</li>
+                        <li>🚗 Cálculo de rotas</li>
+                        <li>📊 Informações de distância</li>
+                        <li>🎓 Blocos pré-configurados da UNIMAR</li>
+                        <li>📱 Interface responsiva e intuitiva</li>
+                    </ul>
+                </div>
+
+                <div class="sobre-card">
+                    <div class="card-icon">🏛️</div>
+                    <h3>Sobre a UNIMAR</h3>
+                    <p>A Universidade de Marília é uma instituição de ensino superior reconhecida pela excelência
+                        acadêmica e compromisso com a formação de profissionais qualificados. Essa plataforma visa
+                        complementar essa experiência educacional.</p>
+                </div>
+            </div>
+
+            <div class="sobre-stats">
+                <div class="stat-item">
+                    <span class="stat-number">6</span>
+                    <span class="stat-label">Blocos Mapeados</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Precisão</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Disponível</span>
+                </div>
+            </div>
+        </section>
+        <section id="mapa-section">
+            <br>
+            <hr>
+            <h2>Mapa Interativo</h2>
+            <div class="map-grid">
+                <aside class="map-side">
+                    <div class="input-group">
+                        <label for="origin">Origem</label>
+                        <select id="origin" class="block-select">
+                            <option value="">Selecione sua Origem...</option>
+                            <option value="Reitoria">🏛️ Reitoria</option>
+                            <option value="Bloco 2">🏢 Bloco 2</option>
+                            <option value="Bloco 3">🏢 Bloco 3</option>
+                            <option value="Bloco 4">🏢 Bloco 4</option>
+                            <option value="Bloco 5">🏢 Bloco 5</option>
+                            <option value="Bloco 9">🏢 Bloco 9</option>
+                        </select>
+                    </div>
+                    <div id="origin-info" class="block-info">
+                        <p>Selecione um bloco para ver informações.</p>
+                    </div>
+                </aside>
+                <div class="map-center">
+                    <div id="map"></div>
+                    <button id="calculate-route" class="route-btn">🚗 Traçar Rota</button>
+                    <div id="route-info" class="route-info hidden">
+                        <h4>📊 Informações da Rota</h4>
+                        <div class="route-details">
+                            <p><strong>Distância:</strong> <span id="route-distance">-</span></p>
+                            <p><strong>Tempo estimado:</strong> <span id="route-duration">-</span></p>
+                            <p><strong>Instruções:</strong></p>
+                            <div id="route-instructions" class="instructions-list"></div>
+                        </div>
+                    </div>
+                </div>
+                <aside class="map-side">
+                    <div class="input-group">
+                        <label for="destination">Destino</label>
+                        <select id="destination" class="block-select">
+                            <option value="">Selecione seu destino...</option>
+                            <option value="Reitoria">🏛️ Reitoria</option>
+                            <option value="Bloco 2">🏢 Bloco 2</option>
+                            <option value="Bloco 3">🏢 Bloco 3</option>
+                            <option value="Bloco 4">🏢 Bloco 4</option>
+                            <option value="Bloco 5">🏢 Bloco 5</option>
+                            <option value="Bloco 9">🏢 Bloco 9</option>
+                        </select>
+                    </div>
+                    <div id="destination-info" class="block-info">
+                        <p>Selecione um bloco para ver informações.</p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="video-container">
+            <h2>🎥 Tour Virtual: Sinta-se na Unimar!</h2>
+            <iframe src="https://www.youtube.com/embed/SzDF8yCsBq8?rel=0&vq=hd1080&modestbranding=1&controls=0"
+                title="Experiência Unimar 360º" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+        </section>
+    </main>
+    <footer>
+        <p>🚀 Uniway - Desenvolvido para o <strong>Bootcamp 2025</strong>, feito para facilitar sua jornada na <strong>UNIMAR</strong></p>
+        <p>Feito por: Giovani Ferreira Magaton, aluno da 3º série do Amilcare Mattei</p>
+        <section id="comentarios">
+            <button id="abrir-comentarios">💬 Deixe seu comentário</button>
+        </section>
+
+        <div class="modal" id="comentarios-modal" aria-hidden="true">
+            <div class="modal-backdrop" id="modal-backdrop"></div>
+            <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="titulo-modal">
+                <div class="modal-header">
+                    <h3 id="titulo-modal">💬 Comentários</h3>
+                    <button class="modal-close" id="modal-close" aria-label="Fechar">×</button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="mensagem" placeholder="Escreva seu comentário..." required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button id="enviar-comentario">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/script.js" defer></script>
+
+</body>
+</html>
