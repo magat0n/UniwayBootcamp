@@ -2,15 +2,14 @@
 
 ## 🗺️ Funcionalidade de Direções
 
-O projeto Uniway agora inclui integração com a **Mapbox Directions API** para calcular rotas entre diferentes locais e a UNIMAR.
+O projeto Uniway inclui integração com a **Mapbox Directions API** para calcular rotas entre diferentes blocos dentro da UNIMAR.
 
 ### ✨ Funcionalidades Implementadas
 
 1. **Calculadora de Rotas**: Interface intuitiva para inserir origem e destino
 2. **Geocodificação**: Conversão automática de endereços em coordenadas
 3. **Visualização no Mapa**: Rota desenhada no mapa com marcadores coloridos
-4. **Informações Detalhadas**: Distância, tempo estimado e instruções passo a passo
-5. **Responsividade**: Interface adaptável para dispositivos móveis
+4. **Responsividade**: Interface adaptável para dispositivos móveis
 
 ### 🚀 Como Usar
 
@@ -35,12 +34,7 @@ O projeto Uniway agora inclui integração com a **Mapbox Directions API** para 
 - **Mapbox Directions API**: Para cálculo de rotas
 - **JavaScript ES6+**: Para funcionalidades interativas
 - **CSS3**: Para estilização responsiva
-
-### 📱 Compatibilidade
-
-- ✅ Desktop (Chrome, Firefox, Safari, Edge)
-- ✅ Mobile (iOS Safari, Chrome Mobile)
-- ✅ Tablet (iPad, Android)
+let (iPad, Android)
 
 ### 🎯 Próximas Melhorias
 
@@ -50,7 +44,5 @@ O projeto Uniway agora inclui integração com a **Mapbox Directions API** para 
 - [ ] Modo offline com cache de rotas
 - [ ] Integração com trânsito em tempo real
 - [ ] Modo noturno
-
 ---
-
 **Desenvolvido para facilitar a jornada dos estudantes na UNIMAR** 🚀
