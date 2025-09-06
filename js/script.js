@@ -3,17 +3,19 @@ const abrirComentariosBtn = document.getElementById("abrir-comentarios");
 const comentariosModal = document.getElementById("comentarios-modal");
 const modalBackdrop = document.getElementById("modal-backdrop");
 const modalCloseBtn = document.getElementById("modal-close");
-const fecharComentariosBtn = document.getElementById("fechar-comentarios");
 const enviarComentarioBtn = document.getElementById("enviar-comentario");
 const mensagemInput = document.getElementById("mensagem");
 
 // Funções para comentários
 function abrirComentarios() {
   comentariosModal.classList.add("show");
+  document.body.classList.add("modal-open");
 }
 
 function fecharComentarios() {
   comentariosModal.classList.remove("show");
+  document.body.classList.remove("modal-open");
+  mensagemInput.value = ""; // Limpa o campo ao fechar
 }
 
 function enviarComentario() {
@@ -25,7 +27,6 @@ function enviarComentario() {
       text: mensagem,
       confirmButtonColor: "#0072BC",
     });
-    mensagemInput.value = "";
     fecharComentarios();
   } else {
     Swal.fire({
@@ -43,16 +44,40 @@ modalBackdrop.addEventListener("click", fecharComentarios);
 modalCloseBtn.addEventListener("click", fecharComentarios);
 enviarComentarioBtn.addEventListener("click", enviarComentario);
 
+// Fechar modal com tecla ESC
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape" && comentariosModal.classList.contains("show")) {
+    fecharComentarios();
+  }
+});
+
 // Mapbox
 mapboxgl.accessToken =
   "pk.eyJ1IjoiY2F1ZWgxcDNyIiwiYSI6ImNsbG8zMDBubDA1bXYzZW4xY3J1aW56cjkifQ.BW8sXRQtfPcAY6zkrsVnRg";
-const map = new mapboxgl.Map({
-  container: "map",
-  style: "mapbox://styles/mapbox/streets-v11",
-  center: [-49.96455, -22.23669], // Coordenadas da Unimar em Marília
-  zoom: 16,
-  interactive: true,
-});
+
+// Função para inicializar o mapa
+function initializeMap() {
+  const map = new mapboxgl.Map({
+    container: "map",
+    style: "mapbox://styles/mapbox/streets-v11",
+    center: [-49.96455, -22.23669], // Coordenadas da Unimar em Marília
+    zoom: 16,
+    interactive: true,
+  });
+
+  // Esconder loading quando mapa carregar
+  map.on('load', function() {
+    const loadingElement = document.getElementById('map-loading');
+    if (loadingElement) {
+      loadingElement.style.display = 'none';
+    }
+  });
+
+  return map;
+}
+
+// Inicializar mapa
+const map = initializeMap();
 
 // Adiciona marcador
 const marker = new mapboxgl.Marker()
@@ -238,7 +263,7 @@ async function calculateRoute() {
 
   // Desabilita o botão durante o cálculo
   calculateRouteBtn.disabled = true;
-  calculateRouteBtn.textContent = "🔄 Calculando...";
+  calculateRouteBtn.classList.add('loading');
 
   try {
     // Usa coordenadas pré-definidas para origem e destino
@@ -336,7 +361,7 @@ async function calculateRoute() {
   } finally {
     // Reabilita o botão
     calculateRouteBtn.disabled = false;
-    calculateRouteBtn.textContent = "🚗 Traçar Rota";
+    calculateRouteBtn.classList.remove('loading');
   }
 }
 
@@ -391,48 +416,3 @@ originInput.addEventListener("keypress", (e) => {
   }
 });
 
-// ===== ALTERNÂNCIA DE TEMA =====
-
-// Elementos do tema
-const themeToggleBtn = document.getElementById("theme-toggle");
-const themeIcon = document.querySelector(".theme-icon");
-
-// Função para alternar tema
-function toggleTheme() {
-  const currentTheme = document.documentElement.getAttribute("data-theme");
-  const newTheme = currentTheme === "dark" ? "light" : "dark";
-  
-  // Aplica o novo tema
-  document.documentElement.setAttribute("data-theme", newTheme);
-  
-  // Atualiza o ícone
-  themeIcon.textContent = newTheme === "dark" ? "☀️" : "🌙";
-  
-  // Salva a preferência no localStorage
-  localStorage.setItem("theme", newTheme);
-  
-  // Atualiza o estilo do mapa para tema escuro
-  if (newTheme === "dark") {
-    map.setStyle("mapbox://styles/mapbox/dark-v10");
-  } else {
-    map.setStyle("mapbox://styles/mapbox/streets-v11");
-  }
-}
-
-// Carrega o tema salvo ao inicializar
-function loadTheme() {
-  const savedTheme = localStorage.getItem("theme") || "light";
-  document.documentElement.setAttribute("data-theme", savedTheme);
-  themeIcon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
-  
-  // Aplica o estilo do mapa baseado no tema
-  if (savedTheme === "dark") {
-    map.setStyle("mapbox://styles/mapbox/dark-v10");
-  }
-}
-
-// Event listener para o botão de alternar tema
-themeToggleBtn.addEventListener("click", toggleTheme);
-
-// Carrega o tema ao inicializar a página
-document.addEventListener("DOMContentLoaded", loadTheme);
