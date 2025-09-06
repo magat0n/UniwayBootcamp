@@ -4,10 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="UNIWAY - Plataforma de navegação inteligente para o campus da UNIMAR. Encontre rotas, explore blocos e facilite sua locomoção na universidade.">
+    <meta name="keywords" content="UNIMAR, navegação, campus, rotas, universidade, Marília, mapa interativo">
+    <meta name="author" content="Giovani Ferreira Magaton">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="UNIWAY - Navegação Inteligente UNIMAR">
+    <meta property="og:description" content="Plataforma de navegação inteligente para o campus da UNIMAR">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://uniway.unimar.br">
     <title>UNIWAY</title>
     <link rel="stylesheet" href="./css/style.css">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
     <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://api.mapbox.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
 </head>
 
 <body>
@@ -20,9 +30,6 @@
                     </a>
                 </div>
                 <nav class="header-nav">
-                    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Alternar tema">
-                        <span class="theme-icon">🌙</span>
-                    </button>
                     <a href="https://portal.unimar.br/alunos/index/login" target="_blank" class="nav-link">👤 Login</a>
                     <a href="https://oficial.unimar.br/vestibular/" target="_blank" class="nav-link">🎓 Vestibular</a>
                     <a href="https://projetos-pessoais-xi.vercel.app/" target="_blank" class="nav-link">👨‍💻
@@ -88,9 +95,8 @@
             </div>
         </section>
         <section id="mapa-section">
-            <br>
-            <hr>
-            <h2>Mapa Interativo</h2>
+            <h2>🗺️ Mapa Interativo</h2>
+            <p class="section-subtitle">Selecione sua origem e destino para traçar a melhor rota no campus</p>
             <div class="map-grid">
                 <aside class="map-side">
                     <div class="input-group">
@@ -111,8 +117,16 @@
                     </div>
                 </aside>
                 <div class="map-center">
-                    <div id="map"></div>
-                    <button id="calculate-route" class="route-btn">🚗 Traçar Rota</button>
+                    <div id="map" class="map-container">
+                        <div id="map-loading" class="map-loading">
+                            <div class="loading-spinner"></div>
+                            <p>Carregando mapa...</p>
+                        </div>
+                    </div>
+                    <button id="calculate-route" class="route-btn">
+                        <span class="btn-text">🚗 Traçar Rota</span>
+                        <span class="btn-loading" style="display: none;">⏳ Calculando...</span>
+                    </button>
                     <div id="route-info" class="route-info hidden">
                         <h4>📊 Informações da Rota</h4>
                         <div class="route-details">
@@ -147,10 +161,13 @@
         <section class="video-container">
             <h2> Tour Virtual: Sinta-se na Unimar!</h2>
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/SzDF8yCsBq8?rel=0&vq=hd1080&modestbranding=1&controls=0"
-                    title="Experiência Unimar 360º" frameborder="0"
+                <iframe src="https://www.youtube.com/embed/SzDF8yCsBq8?rel=0&vq=hd1080&modestbranding=1&controls=1&autoplay=0&mute=1"
+                    title="Experiência Unimar 360º - Tour Virtual do Campus" 
+                    frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                    referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen
+                    loading="lazy">
                 </iframe>
             </div>
         </section>
