@@ -45,7 +45,7 @@ modalCloseBtn.addEventListener("click", fecharComentarios);
 enviarComentarioBtn.addEventListener("click", enviarComentario);
 
 // Fechar modal com tecla ESC
-document.addEventListener("keydown", function(event) {
+document.addEventListener("keydown", function (event) {
   if (event.key === "Escape" && comentariosModal.classList.contains("show")) {
     fecharComentarios();
   }
@@ -66,7 +66,7 @@ function initializeMap() {
   });
 
   // Esconder loading quando mapa carregar
-  map.on('load', function() {
+  map.on('load', function () {
     const loadingElement = document.getElementById('map-loading');
     if (loadingElement) {
       loadingElement.style.display = 'none';
@@ -115,53 +115,52 @@ const UNIMAR_BLOCKS = {
   "Bloco Novo": [-49.9649614256234, -22.240212856740712],
 };
 
-// Informações dos blocos com imagem e cursos (simples)
 const BLOCK_INFOS = {
   Reitoria: {
     endereco: "Av. Higino Muzi Filho, s/n",
-    horario: "08:00 - 18:00",
-    nota: "Administração central",
+    horario: "06:00 - 22:00",
+    nota: "Local de administração da universidade",
     img: "./img/recepcao-novos-alunos-10-1024x683.jpg",
-    cursos: ["Administração", "Direito", "Ciências Contábeis"],
+    cursos: [],
   },
   "Bloco 2": {
     endereco: "Próx. à entrada principal",
-    horario: "07:30 - 22:00",
-    nota: "Salas de aula",
+    horario: "07:30 - 23:00",
+    nota: "Bloco de advocacia",
     img: "./img/3-scaled.webp",
-    cursos: ["Engenharia Civil", "Engenharia de Produção"],
+    cursos: ["Direito"],
   },
   "Bloco 3": {
     endereco: "Eixo principal do campus",
-    horario: "07:30 - 22:00",
-    nota: "Salas e laboratórios",
+    horario: "07:30 - 23:00",
+    nota: "Bloco da psico",
     img: "./img/3-scaled.webp",
-    cursos: ["Sistemas de Informação", "Ciência da Computação"],
+    cursos: ["Psicologia", "Administração"],
   },
   "Bloco 4": {
-    endereco: "Ao lado da clínica",
-    horario: "07:30 - 22:00",
-    nota: "Salas e auditório",
+    endereco: "Ao lado da biblioteca",
+    horario: "07:30 - 23:00",
+    nota: "Bloco do setor de estágios",
     img: "./img/3-scaled.webp",
-    cursos: ["Arquitetura e Urbanismo", "Design"],
+    cursos: ["ADS", "BCC", "IA", "Engenharias"],
   },
   "Bloco 5": {
-    endereco: "Atrás do estacionamento",
-    horario: "07:30 - 22:00",
+    endereco: "Ao lado da quadra",
+    horario: "07:30 - 23:00",
     nota: "Laboratórios",
     img: "./img/3-scaled.webp",
-    cursos: ["Biomedicina", "Farmácia"],
+    cursos: ["Biomedicina", "ADS", "IA", "BCC"],
   },
   "Bloco 9": {
-    endereco: "Área da medicina",
-    horario: "07:30 - 22:00",
+    endereco: "Área da saúde",
+    horario: "07:30 - 23:00",
     nota: "Saúde",
     img: "./img/3-scaled.webp",
-    cursos: ["Medicina", "Enfermagem"],
+    cursos: ["Medicina", "Enfermagem", "Farmácia"],
   },
   "Bloco Novo": {
     endereco: "Tech Unimar",
-    horario: "07:30 - 22:00",
+    horario: "07:30 - 23:00",
     nota: "Novo Bloco",
     img: "./img/3-scaled.webp",
     cursos: ["Incubadora", "Unimar Tech"],
@@ -175,6 +174,16 @@ function renderBlockInfo(element, blockName) {
   }
   const info = BLOCK_INFOS[blockName];
   const cursosLista = (info.cursos || []).map((c) => `<li>${c}</li>`).join("");
+  const cursosSection = info.cursos && info.cursos.length > 0
+    ? `<div class="block-courses">
+        <strong>Cursos:</strong>
+        <ul>${cursosLista}</ul>
+      </div>`
+    : `<div class="block-courses">
+        <strong>Cursos:</strong>
+        <p>Não possui cursos</p>
+      </div>`;
+
   element.innerHTML = `
       <div class="block-info-header">
         <img src="${info.img}" alt="${blockName}" class="block-thumb" />
@@ -185,10 +194,7 @@ function renderBlockInfo(element, blockName) {
           <p><strong>Nota:</strong> ${info.nota}</p>
         </div>
       </div>
-      <div class="block-courses">
-        <strong>Cursos:</strong>
-        <ul>${cursosLista}</ul>
-      </div>
+      ${cursosSection}
     `;
 }
 
@@ -199,34 +205,12 @@ destinationInput.addEventListener("change", () =>
   renderBlockInfo(destinationInfoBox, destinationInput.value)
 );
 
-// Variáveis para armazenar dados da rota
 let routeSource = null;
 let routeLayer = null;
 let originMarker = null;
 let destinationMarker = null;
 
-// Função para geocodificar endereço (converter texto em coordenadas)
-async function geocodeAddress(address) {
-  try {
-    const response = await fetch(
-      `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-        address
-      )}.json?access_token=${mapboxgl.accessToken}&country=BR&limit=1`
-    );
-    const data = await response.json();
 
-    if (data.features && data.features.length > 0) {
-      return data.features[0].center; // [longitude, latitude]
-    } else {
-      throw new Error("Endereço não encontrado");
-    }
-  } catch (error) {
-    console.error("Erro na geocodificação:", error);
-    throw error;
-  }
-}
-
-// Função para calcular rota
 async function calculateRoute() {
   const selectedOrigin = originInput.value;
   const selectedDestination = destinationInput.value;
@@ -365,7 +349,6 @@ async function calculateRoute() {
   }
 }
 
-// Função para exibir informações da rota
 function displayRouteInfo(route, selectedOrigin, selectedDestination) {
   const distance = (route.distance / 1000).toFixed(1); // Converte para km
   const duration = Math.round(route.duration / 60); // Converte para minutos
@@ -415,4 +398,3 @@ originInput.addEventListener("keypress", (e) => {
     calculateRoute();
   }
 });
-
